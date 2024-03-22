@@ -9,7 +9,7 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 # Create a VPC
@@ -24,7 +24,7 @@ resource "aws_vpc" "my-vpc" {
 resource "aws_subnet" "web-subnet-1" {
   vpc_id                  = aws_vpc.my-vpc.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a"
+  availability_zone       = "ap-south-1a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -35,7 +35,7 @@ resource "aws_subnet" "web-subnet-1" {
 resource "aws_subnet" "web-subnet-2" {
   vpc_id                  = aws_vpc.my-vpc.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-east-1b"
+  availability_zone       = "ap-south-1b"
   map_public_ip_on_launch = true
  tags = {
     Name = "Web-2a"
@@ -48,7 +48,7 @@ resource "aws_subnet" "web-subnet-2" {
 resource "aws_subnet" "application-subnet-1" {
   vpc_id                  = aws_vpc.my-vpc.id
   cidr_block              = "10.0.11.0/24"
-  availability_zone       = "us-east-1a"
+  availability_zone       = "ap-south-1a"
   map_public_ip_on_launch = false
 
   tags = {
@@ -59,7 +59,7 @@ resource "aws_subnet" "application-subnet-1" {
 resource "aws_subnet" "application-subnet-2" {
   vpc_id                  = aws_vpc.my-vpc.id
   cidr_block              = "10.0.12.0/24"
-  availability_zone       = "us-east-1b"
+  availability_zone       = "ap-south-1b"
   map_public_ip_on_launch = false
 
   tags = {
@@ -71,7 +71,7 @@ resource "aws_subnet" "application-subnet-2" {
 resource "aws_subnet" "database-subnet-1" {
   vpc_id            = aws_vpc.my-vpc.id
   cidr_block        = "10.0.21.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = "ap-south-1a"
 
   tags = {
     Name = "Database-1a"
@@ -81,7 +81,7 @@ resource "aws_subnet" "database-subnet-1" {
 resource "aws_subnet" "database-subnet-2" {
   vpc_id            = aws_vpc.my-vpc.id
   cidr_block        = "10.0.22.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = "ap-south-1b"
 
   tags = {
     Name = "Database-2b"
@@ -91,7 +91,7 @@ resource "aws_subnet" "database-subnet-2" {
 resource "aws_subnet" "database-subnet" {
   vpc_id            = aws_vpc.my-vpc.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = "ap-south-1a"
 
   tags = {
     Name = "Database"
@@ -135,10 +135,10 @@ resource "aws_route_table_association" "b" {
 
 #Create EC2 Instance
 resource "aws_instance" "webserver1" {
-  ami                    = "ami-0d5eff06f840b45e9"
+  ami                    = "ami-026255a2746f88074"
   instance_type          = "t2.micro"
-  availability_zone      = "us-east-1a"
-  key_name               = "nvj"
+  availability_zone      = "ap-south-1a"
+  key_name               = "minnu"
   vpc_security_group_ids = [aws_security_group.webserver-sg.id]
   subnet_id              = aws_subnet.web-subnet-1.id
   user_data              = "${file("apache.sh")}"
@@ -149,10 +149,10 @@ resource "aws_instance" "webserver1" {
 }
 
 resource "aws_instance" "webserver2" {
-  ami                    = "ami-0d5eff06f840b45e9"
+  ami                    = "ami-026255a2746f88074"
   instance_type          = "t2.micro"
-  availability_zone      = "us-east-1b"
-  key_name               = "nvj"
+  availability_zone      = "ap-south-1b"
+  key_name               = "minnu"
   vpc_security_group_ids = [aws_security_group.webserver-sg.id]
   subnet_id              = aws_subnet.web-subnet-2.id
   user_data              = "${file("apache.sh")}"
@@ -164,10 +164,10 @@ resource "aws_instance" "webserver2" {
 
 #Create EC2 Instance
 resource "aws_instance" "appserver1" {
-  ami                    = "ami-0d5eff06f840b45e9"
+  ami                    = "ami-026255a2746f88074"
   instance_type          = "t2.micro"
-  availability_zone      = "us-east-1a"
-  key_name               = "nvj"
+  availability_zone      = "ap-south-1a"
+  key_name               = "minnu"
   vpc_security_group_ids = [aws_security_group.appserver-sg.id]
   subnet_id              = aws_subnet.application-subnet-1.id
   tags = {
@@ -176,10 +176,10 @@ resource "aws_instance" "appserver1" {
 }
 
 resource "aws_instance" "appserver2" {
-  ami                    = "ami-0d5eff06f840b45e9"
+  ami                    = "ami-026255a2746f88074"
   instance_type          = "t2.micro"
-  availability_zone      = "us-east-1b"
-  key_name               = "nvj"
+  availability_zone      = "ap-south-1b"
+  key_name               = "minnu"
   vpc_security_group_ids = [aws_security_group.appserver-sg.id]
   subnet_id              = aws_subnet.application-subnet-2.id
 
@@ -361,7 +361,7 @@ output "lb_dns_name" {
 
 
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "batch4pmdevopswithaws202477"  
+  bucket = "sravan9908"  
 
   acl    = "private"  
   versioning {
